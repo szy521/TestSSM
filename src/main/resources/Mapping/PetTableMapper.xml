@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.PetTableDao">
+	<select id="getAll" resultType="PetTable">
+		select * from pettable
+	</select>
+	
+	<insert id="addAll">
+		insert into pettable values (#{pid},#{pname},#{type_name},#{health},#{love},#{birthday},#{owner_id},#{store_id})
+	</insert>
+	
+	<update id="updateAllByID" parameterType="PetTable">
+		update pettable 
+		<trim prefix="set" suffixOverrides="," suffix="where pid=#{pid}">
+			<if test="pname != null and pname != '' ">
+				pname=#{pname} ,
+			</if>
+			<if test="love != null and love != '' ">
+				love=#{love} ,
+			</if>
+			<if test=" health != null and health != '' ">
+				health=#{health} ,
+			</if>
+		</trim>
+	</update>
+	
+	
+	<delete id="delAllByID" parameterType="int">
+		delete from pettable where pid=#{pid}
+	</delete>
+	
+	<select id="LimitShowAll" resultType="PetTable">
+		select * from pettable limit #{start} , #{end}
+	</select>
+	
+	<select id="countAll" resultType="int">
+		select count(*) from pettable
+	</select>
+
+	<select id="login" resultType="PetTable" parameterType="PetTable">
+		select * from pettable where pname=#{pname} and pid=#{pid}
+	</select>
+
+
+
+</mapper>
